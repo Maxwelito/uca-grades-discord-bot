@@ -8,7 +8,9 @@ showforms()
 fv("1", "username", "maaudigie")
 fv("1", "password", passw)
 submit()
-go('https://ent.uca.fr/scolarite/stylesheets/etu/notes.faces')
+go('https://ent.uca.fr/scolarite/stylesheets/etu/welcome.faces')
+save_html('menu_notes.html')
+showlinks()
 show()
 
 '''
