@@ -1,10 +1,19 @@
+from urllib import response
 import requests
 from bs4 import BeautifulSoup
 from twill.commands import *
 from secret import passw
+import mechanize
+
+br = mechanize.Browser()
+br.open("https://ent.uca.fr")
+for form in br.forms() :
+    print(form)
+    print(form.find_control("username"))
 
 go('https://ent.uca.fr')
 showforms()
+'''
 fv("1", "username", "maaudigie")
 fv("1", "password", passw)
 submit()
@@ -13,7 +22,7 @@ save_html('menu_notes.html')
 showlinks()
 show()
 
-'''
+
 response = requests.get('https://ent.uca.fr/scolarite/stylesheets/etu/notes.faces')
 print (response.status_code)
 
