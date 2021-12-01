@@ -8,12 +8,17 @@ import mechanize
 br = mechanize.Browser()
 br.open("https://ent.uca.fr")
 for form in br.forms() :
-    print(form)
-    print(form.find_control("username"))
+    print("Form name:", form.name)
+    #print(form)
 
+br.form = list(br.forms())[0]
+
+for control in br.form.controls:
+    #print(control)
+    print ("type=%s, name=%s value=%s" % (control.type, control.name, br[control.name]))
+'''
 go('https://ent.uca.fr')
 showforms()
-'''
 fv("1", "username", "maaudigie")
 fv("1", "password", passw)
 submit()
