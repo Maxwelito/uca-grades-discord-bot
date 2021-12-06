@@ -58,12 +58,18 @@ for control in br.form.controls:
     #print(control)
     print ("type=%s, name=%s value=%s" % (control.type, control.name, br[control.name]))
 '''
-lien1 = list(br.links())[12]
-print(lien1)
-request4 = br.click_link(lien1)
+lien1 = br.find_link(text_regex=re.compile("2ème année DI Informatique"))
+print("Lien 1 : ", lien1)
+#br.form.action = "oamSubmitForm('_id74','_id74:tableetp:2:_id128',null,[['row','2']]);\"), ('id', '_id74:tableetp:2:_id128')"
+'''lien2 = br.find_link(text_regex=re.compile("L2 Informatique"))
+print("Lien 2 : ", lien2)
+
+#request4 = br.click_link(lien1)
 response4 = br.follow_link(lien1)
-soup4 = BeautifulSoup(response4)
+soup4 = BeautifulSoup(response4, 'lxml')
 print(soup4.prettify())
+'''
+
 
 '''
 go('https://ent.uca.fr')
