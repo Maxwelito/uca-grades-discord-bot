@@ -1,5 +1,8 @@
 lxml
 beautiful-soup
-requests
-twill
 mechanize
+
+
+balise tbody
+diff pk pas
+regex, check sibling à droite pour la note
