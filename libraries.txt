@@ -6,3 +6,5 @@ mechanize
 balise tbody
 diff pk pas
 regex, check sibling à droite pour la note
+pour chaque tr dans le tbody, 3eme td = matière, 4e = note
+ajouter les matières qui ont une note dans la liste, si liste plus grande que liste précédente -> notif
