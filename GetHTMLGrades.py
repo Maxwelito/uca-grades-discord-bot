@@ -1,3 +1,4 @@
+from urllib import response
 import mechanize
 import re
 from bs4 import BeautifulSoup
@@ -47,11 +48,21 @@ def GetRowFormation(formation) :
     br.open("https://ent.uca.fr/scolarite/stylesheets/etu/notes.faces")
 
     link = br.find_link(text_regex=re.compile(formation))
-    print(link)
+    lien = str(link)
+    lien = re.sub(r'([ -î])+row\',\'', '', lien)
+    lien = re.sub(r'\']]\)([ -î])+', '', lien)
+    br.close()
+
+    return(lien)
+
+def GetGradesTest() :
+    br = mechanize.Browser()
+    response = br.open("https://maxime-audigie.com/notes_vide.html")
+
+    soup = BeautifulSoup(response, 'lxml')
+    with open("notes.html", "w", encoding = 'utf-8') as file :
+        file.write(str(soup))
 
     br.close()
 
-    
-
-f = "2ème année DI Informatique"
-GetRowFormation(f)
+GetGradesTest()
