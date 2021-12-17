@@ -1,17 +1,16 @@
-from urllib import response
 import mechanize
 import re
 from bs4 import BeautifulSoup
 from secret import passw
 
-def GetGradesPage(row) :
+def GetGradesPage(username, password, row) :
     br = mechanize.Browser()
     br.open("https://ent.uca.fr")
 
     br.form = list(br.forms())[0]
 
-    br["username"] = "maaudigie"
-    br["password"] = passw
+    br["username"] = username
+    br["password"] = password
 
     br.submit()
 
@@ -28,19 +27,19 @@ def GetGradesPage(row) :
     response = br.submit()
     soup = BeautifulSoup(response, 'lxml')
 
-    with open("notes_vide.html", "w", encoding = 'utf-8') as file :
+    with open("notes.html", "w", encoding = 'utf-8') as file :
         file.write(str(soup))
 
     br.close()
 
-def GetRowFormation(formation) :
+def GetRowFormation(username, password, formation) :
     br = mechanize.Browser()
     br.open("https://ent.uca.fr")
 
     br.form = list(br.forms())[0]
 
-    br["username"] = "maaudigie"
-    br["password"] = passw
+    br["username"] = username
+    br["password"] = password
 
     br.submit()
 
@@ -65,4 +64,4 @@ def GetGradesTest() :
 
     br.close()
 
-GetGradesTest()
+print(GetRowFormation('maaudigie', passw, '3è année DI Informatique et modélisation'))

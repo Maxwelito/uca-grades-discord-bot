@@ -1,5 +1,7 @@
 import os
 from bs4 import BeautifulSoup
+from secret import passw
+from GetHTMLGrades import GetGradesPage, GetRowFormation
 
 def GetNewNotes() :
     with open("old_notes.html") as file :
@@ -46,3 +48,15 @@ def GetNewNotes() :
 
 def RenameFiles() :
     os.rename("notes.html", "old_notes.html")
+
+def InitFiles(username, password, formation) :
+    row = GetRowFormation(username, password, formation)
+    print(row)
+    GetGradesPage(username, password, row)
+    print(2)
+    RenameFiles()
+    print(3)
+    GetGradesPage(username, password, row)
+    print(4)
+
+InitFiles('maaudigie', passw, '3è année DI Informatique et modélisation')
