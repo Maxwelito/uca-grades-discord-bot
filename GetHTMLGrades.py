@@ -1,7 +1,7 @@
 import mechanize
 import re
+import os
 from bs4 import BeautifulSoup
-from secret import passw
 
 def GetGradesPage(username, password, row) :
     br = mechanize.Browser()
@@ -54,6 +54,16 @@ def GetRowFormation(username, password, formation) :
 
     return(lien)
 
+def ManageFiles() :
+    os.remove("old_notes.html")
+    os.rename("notes.html", "old_notes.html")
+
+def InitFiles(username, password, formation) :
+    row = GetRowFormation(username, password, formation)
+    GetGradesPage(username, password, row)
+    ManageFiles()
+    GetGradesPage(username, password, row)
+
 def GetGradesTest() :
     br = mechanize.Browser()
     response = br.open("https://maxime-audigie.com/notes_vide.html")
@@ -64,4 +74,7 @@ def GetGradesTest() :
 
     br.close()
 
-print(GetRowFormation('maaudigie', passw, '3è année DI Informatique et modélisation'))
+def InitFilesTest() :
+    GetGradesTest()
+    ManageFiles()
+    GetGradesTest()

@@ -1,7 +1,5 @@
-import os
 from bs4 import BeautifulSoup
-from secret import passw
-from GetHTMLGrades import GetGradesPage, GetRowFormation
+import subprocess
 
 def GetNewNotes() :
     with open("old_notes.html") as file :
@@ -46,17 +44,9 @@ def GetNewNotes() :
 
     return liste2
 
-def RenameFiles() :
-    os.rename("notes.html", "old_notes.html")
+def CheckDiff() :
+    proc = subprocess.run(["diff", "notes.html", "old_notes.html"])
+    return(0 if proc.returncode == 0 else 1)
 
-def InitFiles(username, password, formation) :
-    row = GetRowFormation(username, password, formation)
-    print(row)
-    GetGradesPage(username, password, row)
-    print(2)
-    RenameFiles()
-    print(3)
-    GetGradesPage(username, password, row)
-    print(4)
-
-InitFiles('maaudigie', passw, '3è année DI Informatique et modélisation')
+#InitFiles('maaudigie', passw, '3è année DI Informatique et modélisation')
+#print()
