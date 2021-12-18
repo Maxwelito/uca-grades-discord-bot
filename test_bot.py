@@ -1,5 +1,5 @@
 import discord
-from GetHTMLGrades import GetGradesTest, InitFilesTest
+from GetHTMLGrades import DeleteOldFile, GetGradesTest, InitFilesTest, RenameFile
 from ParseHTML import CheckDiff, GetNewNotes
 from secret import tk
 from discord.ext import tasks
@@ -25,6 +25,8 @@ class GradeChecker(discord.Client) :
                 await channel.send("@everyone Nouvelle note de " + mat)
         else :
             await channel.send("y'a R frérot")
+        DeleteOldFile()
+        RenameFile()
         
 
     @tasks.loop(seconds=5)

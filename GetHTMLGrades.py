@@ -54,15 +54,16 @@ def GetRowFormation(username, password, formation) :
 
     return(lien)
 
-def ManageFiles() :
-    os.remove("old_notes.html")
+def RenameFile() :
     os.rename("notes.html", "old_notes.html")
+
+def DeleteOldFile() :
+    os.remove("old_notes.html")
 
 def InitFiles(username, password, formation) :
     row = GetRowFormation(username, password, formation)
     GetGradesPage(username, password, row)
-    ManageFiles()
-    GetGradesPage(username, password, row)
+    RenameFile()
 
 def GetGradesTest() :
     br = mechanize.Browser()
@@ -76,5 +77,6 @@ def GetGradesTest() :
 
 def InitFilesTest() :
     GetGradesTest()
-    ManageFiles()
-    GetGradesTest()
+    RenameFile()
+
+GetGradesTest()

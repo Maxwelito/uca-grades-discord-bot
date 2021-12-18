@@ -48,5 +48,4 @@ def CheckDiff() :
     proc = subprocess.run(["diff", "notes.html", "old_notes.html"])
     return(0 if proc.returncode == 0 else 1)
 
-#InitFiles('maaudigie', passw, '3è année DI Informatique et modélisation')
-#print()
+print(GetNewNotes())
