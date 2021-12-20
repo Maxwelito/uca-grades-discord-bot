@@ -2,6 +2,7 @@ import mechanize
 import re
 import os
 from bs4 import BeautifulSoup
+from secret import passw
 
 def GetGradesPage(username, password, row) :
     br = mechanize.Browser()
@@ -79,4 +80,4 @@ def InitFilesTest() :
     GetGradesTest()
     RenameFile()
 
-GetGradesTest()
+GetGradesPage('maaudigie', passw, '0')
