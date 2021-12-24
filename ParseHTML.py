@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import subprocess
+import pickle
 
 def GetNewNotes() :
     with open("old_notes.html") as file :
@@ -48,4 +49,7 @@ def CheckDiff() :
     proc = subprocess.run(["diff", "notes.html", "old_notes.html"])
     return(0 if proc.returncode == 0 else 1)
 
-print(GetNewNotes())
+def InitChannelList() :
+    channel_list = []
+    with open("channels", 'wb') as file :
+        pickle.dump(channel_list, file)

@@ -79,5 +79,3 @@ def GetGradesTest() :
 def InitFilesTest() :
     GetGradesTest()
     RenameFile()
-
-GetGradesPage('maaudigie', passw, '0')
