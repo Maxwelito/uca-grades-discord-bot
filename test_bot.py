@@ -1,22 +1,29 @@
 import discord
+from discord import client
 from GetHTMLGrades import DeleteOldFile, GetGradesTest, InitFilesTest, RenameFile
 from ParseHTML import CheckDiff, GetNewNotes
 from secret import tk
-from discord.ext import tasks
+from discord.ext import tasks, commands
 
-class GradeChecker(discord.Client) :
-    def __init__(self, *, loop=None, **options):
-        super().__init__(loop=loop, **options)
+description = """An example bot to showcase the discord.ext.commands extension
+module.
+There are a number of utility commands being showcased here."""
+
+class GradeChecker(discord.Bot) :
+    @client.event
+    def __init__(self, command_prefix, description=None, **options):
+        super().__init__(command_prefix, description=description, **options)
         self.counter = 0
-        self.my_background_task.start()
+        self.check_notes.start()
         InitFilesTest()
 
+    '''@commands.Bot.event
     async def on_ready(self):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
-        print("------")
+        print("------")'''
 
     @tasks.loop(seconds=10) 
-    async def my_background_task(self):
+    async def check_notes(self):
         channel = self.get_channel(919338640776257596)
         GetGradesTest()
         if(CheckDiff()) :
@@ -27,21 +34,20 @@ class GradeChecker(discord.Client) :
             await channel.send("y'a R frérot")
         DeleteOldFile()
         RenameFile()
-        
-
+    
     @tasks.loop(seconds=5)
     async def second_background_task(self):
         channel = self.get_channel(919338640776257596)
         await channel.send("ziggy")
 
-    @my_background_task.before_loop
-    async def before_my_task(self):
-        await self.wait_until_ready()  # wait until the bot logs in
+    @check_notes.before_loop
+    async def prepare_check_notes(self):
+        await self.wait_until_ready()
     
     @second_background_task.before_loop
     async def before_second_task(self):
         await self.wait_until_ready()
 
 
-client = GradeChecker()
-client.run(tk)
+bot = GradeChecker(command_prefix='zig', description=description)
+bot.run(tk)
