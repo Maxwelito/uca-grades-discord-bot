@@ -1,23 +1,23 @@
 import discord
 from discord.ext import commands, tasks
-from ParseHTML import InitChannelList
+from channel_management import get_channels_list, init_channel_list, add_a_channel
 from secret import tk
 import pickle
 
 class GradeNotifier(commands.Bot) :
     def __init__(self, command_prefix='!', help_command=None, description=None, **options):
         super().__init__(command_prefix, help_command=help_command, description=description, **options)
-        InitChannelList()
+        init_channel_list()
         self.check_notes.start()
 
     async def on_ready(self):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
         print("------")
+        await self.define_status()
 
     @tasks.loop(seconds=5)
     async def check_notes(self):
-        with open("channels", 'rb') as file:
-            channel_list = pickle.load(file)
+        channel_list = get_channels_list()
         for id in channel_list :
             channel = self.get_channel(id)
             await channel.send('yo')
@@ -39,11 +39,7 @@ async def salut(ctx) :
 
 @bot.command()
 async def add_channel(ctx) :
-    with open("channels", 'rb') as file :
-        channel_list = pickle.load(file)
-    channel_list.append(ctx.channel.id)
-    with open("channels", 'wb') as file :
-        pickle.dump(channel_list, file)
+    add_a_channel(ctx.channel.id)
     await ctx.send(f"Le channel {ctx.channel} a été ajouté.")
 
 bot.run(tk)

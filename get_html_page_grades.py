@@ -2,9 +2,8 @@ import mechanize
 import re
 import os
 from bs4 import BeautifulSoup
-from secret import passw
 
-def GetGradesPage(username, password, row) :
+def get_grades_page(username, password, row) :
     br = mechanize.Browser()
     br.open("https://ent.uca.fr")
 
@@ -33,7 +32,7 @@ def GetGradesPage(username, password, row) :
 
     br.close()
 
-def GetRowFormation(username, password, formation) :
+def get_row_formation(username, password, formation) :
     br = mechanize.Browser()
     br.open("https://ent.uca.fr")
 
@@ -55,18 +54,18 @@ def GetRowFormation(username, password, formation) :
 
     return(lien)
 
-def RenameFile() :
+def rename_file() :
     os.rename("notes.html", "old_notes.html")
 
-def DeleteOldFile() :
+def delete_old_file() :
     os.remove("old_notes.html")
 
-def InitFiles(username, password, formation) :
-    row = GetRowFormation(username, password, formation)
-    GetGradesPage(username, password, row)
-    RenameFile()
+def init_files(username, password, formation) :
+    row = get_row_formation(username, password, formation)
+    get_grades_page(username, password, row)
+    rename_file()
 
-def GetGradesTest() :
+def get_grades_test() :
     br = mechanize.Browser()
     response = br.open("https://maxime-audigie.com/notes_vide.html")
 
@@ -76,6 +75,6 @@ def GetGradesTest() :
 
     br.close()
 
-def InitFilesTest() :
-    GetGradesTest()
-    RenameFile()
+def init_files_test() :
+    get_grades_test()
+    rename_file()
