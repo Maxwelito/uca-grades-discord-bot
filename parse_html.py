@@ -44,6 +44,27 @@ def get_new_notes() :
 
     return liste2
 
+def get_actual_notes() :
+    with open("notes.html") as file :
+        soup = BeautifulSoup(file, 'lxml')
+    
+    liste = []
+    tbody = soup.tbody
+
+    for balise in tbody.contents :
+        if(balise.name == "tr") :
+            ligne = balise.contents
+            matiere = ligne[2]
+            note = ligne[3]
+            if(len(matiere.contents) == 1) :
+                if(len(note.contents) == 1) :
+                    liste.append(matiere.string)
+    
+    for i in range (0, len(liste)) :
+        liste[i] = liste[i].strip()
+
+    return liste
+
 def check_diff() :
     proc = subprocess.run(["diff", "notes.html", "old_notes.html"])
     return(0 if proc.returncode == 0 else 1)

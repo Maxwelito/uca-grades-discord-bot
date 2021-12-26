@@ -60,8 +60,7 @@ def rename_file() :
 def delete_old_file() :
     os.remove("old_notes.html")
 
-def init_files(username, password, formation) :
-    row = get_row_formation(username, password, formation)
+def init_files(username, password, row) :
     get_grades_page(username, password, row)
     rename_file()
 
