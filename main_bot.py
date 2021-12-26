@@ -1,17 +1,18 @@
-import discord
+import discord, os
 from discord.ext import commands, tasks
 from channel_management import get_channels_list, init_channel_list, add_a_channel
 from get_html_page_grades import delete_old_file, get_grades_page, get_grades_test, get_row_formation, init_files, init_files_test, rename_file
 from parse_html import check_diff, get_actual_notes, get_new_notes
-from secret import tk
 from datetime import datetime
+
+tk = os.getenv('TOKEN')
 
 class GradeNotifier(commands.Bot) :
     def __init__(self, command_prefix='!', help_command=None, description=None, **options):
         super().__init__(command_prefix, help_command=help_command, description=description, **options)
-        self.username = ''
-        self.password = ''
-        self.formation = ''
+        self.username = os.getenv('USERNAME')
+        self.password = os.getenv('PASSWORD')
+        self.formation = os.getenv('FORMATION')
         self.row = get_row_formation(self.username, self.password, self.formation)
         init_channel_list()
         init_files(self.username, self.password, self.row)
@@ -33,6 +34,7 @@ class GradeNotifier(commands.Bot) :
                 for id in channel_list :
                     channel = self.get_channel(id)
                     await channel.send(f"@everyone Nouvelle note de {mat}.")
+        print("on check")
         delete_old_file()
         rename_file()
         self.last_check_time = datetime.now()
