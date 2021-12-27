@@ -1,6 +1,7 @@
 import mechanize
 import re
 import os
+import subprocess
 from bs4 import BeautifulSoup
 
 def get_grades_page(username, password, row) :
@@ -18,17 +19,23 @@ def get_grades_page(username, password, row) :
 
     br.open("https://ent.uca.fr/scolarite/stylesheets/etu/notes.faces")
 
-    br.form = list(br.forms())[3]
-    br.form.set_all_readonly(False)
-    br["_id74:_idcl"] = "_id74:tableetp:0:_id128"
-    br["_id74:_link_hidden_"] = "null"
-    br['row'] = str(row)
+    try:
+        br.form = list(br.forms())[3]
+        br.form.set_all_readonly(False)
+        br["_id74:_idcl"] = "_id74:tableetp:0:_id128"
+        br["_id74:_link_hidden_"] = "null"
+        br['row'] = str(row)
 
-    response = br.submit()
-    soup = BeautifulSoup(response, 'lxml')
+        response = br.submit()
+        soup = BeautifulSoup(response, 'lxml')
 
-    with open("notes.html", "w", encoding = 'utf-8') as file :
-        file.write(str(soup))
+        with open("notes.html", "w", encoding = 'utf-8') as file :
+            file.write(str(soup))
+
+    except IndexError:
+        print("Erreur sélection du form")
+        subprocess.run(["cp", "old_notes.hmtl", "notes.html"])
+    
 
     br.close()
 
