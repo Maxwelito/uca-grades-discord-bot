@@ -34,7 +34,7 @@ def get_grades_page(username, password, row) :
 
     except IndexError:
         print("Erreur sélection du form")
-        subprocess.run(["cp", "old_notes.hmtl", "notes.html"])
+        subprocess.run(["cp", "old_notes.html", "notes.html"])
     
 
     br.close()
